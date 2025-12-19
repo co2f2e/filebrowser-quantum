@@ -4,7 +4,7 @@ set -e
 # -----------------------------
 # Constants
 # -----------------------------
-CD /
+cd /
 APP_NAME="filebrowser"
 BIN_DIR="/usr/local/bin"
 CONFIG_DIR="/etc/filebrowser"
