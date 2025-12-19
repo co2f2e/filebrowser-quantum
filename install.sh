@@ -16,8 +16,11 @@ RELEASE_BASE="https://github.com/gtsteffaniak/filebrowser/releases/latest/downlo
 # 0) Ensure working directory exists and writable
 # -----------------------------
 sudo mkdir -p /etc/filebrowser
-sudo chown root:root /etc/filebrowser
-sudo chmod 700 /etc/filebrowser
+sudo chown -R root:root /etc/filebrowser
+sudo chmod -R 700 /etc/filebrowser
+
+sudo touch /etc/filebrowser/database.db
+sudo chmod 600 /etc/filebrowser/database.db
 
 # -----------------------------
 # 1) Download binary
