@@ -12,6 +12,11 @@ SERVICE_FILE="/etc/systemd/system/filebrowser.service"
 PORT=$1
 RELEASE_BASE="https://github.com/gtsteffaniak/filebrowser/releases/latest/download"
 
+sudo mkdir -p /etc/filebrowser
+sudo touch /etc/filebrowser/database.db
+sudo chown root:root /etc/filebrowser/database.db
+sudo chmod 600 /etc/filebrowser/database.db
+
 # -----------------------------
 # 1) Download binary
 # -----------------------------
