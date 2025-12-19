@@ -36,10 +36,14 @@ echo "Installed binary to ${BIN_DIR}/${APP_NAME}"
 echo "Creating config directory at ${CONFIG_DIR}..."
 mkdir -p "${CONFIG_DIR}"
 
+if [[ -z "$PORT" ]]; then
+    echo "ERROR: Port not specified!"
+    exit 1
+fi
 # Basic config.yaml
 cat > "${CONFIG_FILE}" <<EOF
 server:
-  bind: ":${PORT}"
+  bind: "${PORT}"
   baseURL: "/"
 auth:
   adminUsername: "admin"
