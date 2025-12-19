@@ -4,6 +4,7 @@ set -e
 # -----------------------------
 # Constants
 # -----------------------------
+CD /
 APP_NAME="filebrowser"
 BIN_DIR="/usr/local/bin"
 CONFIG_DIR="/etc/filebrowser"
@@ -65,20 +66,22 @@ server:
   port: ${PORT}
   baseURL: "/"
   database: "/etc/filebrowser/database.db"
+
   sources:
-    - path: "/"
+    - path: "/filebrowser_quantum"
       config:
         defaultEnabled: true
 
 auth:
   adminUsername: "admin"
-  auth:
-    methods:
-      password:
-        enabled: true
-        minLength: 1
-
+  methods:
+    password:
+      enabled: true
+      minLength: 1
 EOF
+
+sudo mkdir -p /filebrowser_quantum
+sudo chown -R root:root /filebrowser_quantum
 
 echo "Default config written to ${CONFIG_FILE}"
 
@@ -115,7 +118,6 @@ echo "==============================="
 echo "FileBrowser installed & started"
 echo "Access: http://$(hostname -I | awk '{print $1}'):${PORT}"
 echo "Username: admin"
-echo "Password: admin"
 echo "Config at: ${CONFIG_FILE}"
 echo "You can modify config and restart service via:"
 echo "  systemctl restart filebrowser"
