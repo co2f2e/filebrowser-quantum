@@ -1,17 +1,21 @@
 #!/usr/bin/env bash
 set -e
 
-# -----------------------------
-# Constants
-# -----------------------------
 cd /
 APP_NAME="filebrowser"
 BIN_DIR="/usr/local/bin"
 CONFIG_DIR="/etc/filebrowser"
 CONFIG_FILE="${CONFIG_DIR}/config.yaml"
 SERVICE_FILE="/etc/systemd/system/filebrowser.service"
-PORT=$1
 RELEASE_BASE="https://github.com/gtsteffaniak/filebrowser/releases/latest/download"
+
+PORT=$1
+USERNAME=$2
+
+if [[ -z "$PORT" || -z "$USERNAME" ]]; then
+    echo "Usage: $0 <port> <username>"
+    exit 1
+fi
 
 sudo mkdir -p /etc/filebrowser
 sudo chown -R root:root /etc/filebrowser
@@ -62,7 +66,7 @@ server:
         defaultEnabled: true
 
 auth:
-  adminUsername: "admin"
+  adminUsername: "${USERNAME}"
   adminPassword: "admin123456"
   methods:
     password:
@@ -100,7 +104,8 @@ systemctl start filebrowser.service
 echo "==============================="
 echo "FileBrowser installed & started"
 echo "Access: http://$(hostname -I | awk '{print $1}'):${PORT}"
-echo "Username: admin"
+echo "Username: ${USERNAME}"
+echo "Password: admin123456"
 echo "Config at: ${CONFIG_FILE}"
 echo "You can modify config and restart service via:"
 echo "  systemctl restart filebrowser"
