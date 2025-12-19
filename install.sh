@@ -20,7 +20,7 @@ sudo chown -R root:root /etc/filebrowser
 sudo chmod -R 700 /etc/filebrowser
 
 sudo touch /etc/filebrowser/database.db
-sudo chmod 600 /etc/filebrowser/database.db
+sudo chown root:root /etc/filebrowser/database.db
 
 # -----------------------------
 # 1) Download binary
@@ -62,12 +62,22 @@ echo "Installed binary to ${BIN_DIR}/${APP_NAME} and made it executable"
 # Basic config.yaml
 cat > "${CONFIG_FILE}" <<EOF
 server:
-  address: ":${PORT}"
+  port: ${PORT}
   baseURL: "/"
+  database: "/etc/filebrowser/database.db"
+  sources:
+    - path: "/"
+      config:
+        defaultEnabled: true
+
 auth:
   adminUsername: "admin"
-  adminPassword: "admin"
-database: "/etc/filebrowser/database.db"
+  auth:
+    methods:
+      password:
+        enabled: true
+        minLength: 1
+
 EOF
 
 echo "Default config written to ${CONFIG_FILE}"
