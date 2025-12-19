@@ -93,7 +93,7 @@ auth:
       enabled: true
       minLength: 10
 userDefaults:
-  locale "${LOCALE}"
+  locale: "${LOCALE}"
 EOF
 
 if [[ ! -d "${STORAGE_NAME}" ]]; then
