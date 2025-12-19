@@ -12,6 +12,11 @@ SERVICE_FILE="/etc/systemd/system/filebrowser.service"
 PORT=$1
 RELEASE_BASE="https://github.com/gtsteffaniak/filebrowser/releases/latest/download"
 
+sudo mkdir -p /etc/filebrowser
+sudo touch /etc/filebrowser/database.db
+sudo chown root:root /etc/filebrowser/database.db
+sudo chmod 600 /etc/filebrowser/database.db
+
 # -----------------------------
 # 1) Download binary
 # -----------------------------
@@ -44,11 +49,12 @@ fi
 # Basic config.yaml
 cat > "${CONFIG_FILE}" <<EOF
 server:
-  bind: "${PORT}"
+  bind: ":${PORT}"
   baseURL: "/"
 auth:
   adminUsername: "admin"
   adminPassword: "admin"
+database: "/etc/filebrowser/database.db"
 EOF
 
 echo "Default config written to ${CONFIG_FILE}"
@@ -68,7 +74,7 @@ ExecStart=${BIN_DIR}/${APP_NAME} -c ${CONFIG_FILE}
 Restart=on-failure
 User=root
 Group=root
-WorkingDirectory=/
+WorkingDirectory=/etc/filebrowser
 
 [Install]
 WantedBy=multi-user.target
