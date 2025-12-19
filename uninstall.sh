@@ -5,6 +5,7 @@ APP_NAME="filebrowser"
 BIN_PATH="/usr/local/bin/${APP_NAME}"
 CONFIG_DIR="/etc/filebrowser"
 SERVICE_FILE="/etc/systemd/system/${APP_NAME}.service"
+FILE="/filebrowser_quantum"
 
 echo "Stopping FileBrowser service..."
 if systemctl is-active --quiet ${APP_NAME}; then
@@ -30,6 +31,11 @@ fi
 echo "Removing configuration directory..."
 if [ -d "${CONFIG_DIR}" ]; then
     sudo rm -rf "${CONFIG_DIR}"
+fi
+
+echo "Removing directory..."
+if [ -d "${FILE}" ]; then
+    sudo rm -rf "${FILE}"
 fi
 
 echo "FileBrowser has been completely uninstalled."
