@@ -12,11 +12,6 @@ SERVICE_FILE="/etc/systemd/system/filebrowser.service"
 PORT=$1
 RELEASE_BASE="https://github.com/gtsteffaniak/filebrowser/releases/latest/download"
 
-sudo mkdir -p /etc/filebrowser
-sudo touch /etc/filebrowser/database.db
-sudo chown root:root /etc/filebrowser/database.db
-sudo chmod 600 /etc/filebrowser/database.db
-
 # -----------------------------
 # 1) Download binary
 # -----------------------------
@@ -32,7 +27,12 @@ else
 fi
 
 echo "Downloading ${FILE}..."
-curl -L "${RELEASE_BASE}/${FILE}" -o "${BIN_DIR}/${APP_NAME}"
+curl -L -f "${RELEASE_BASE}/${FILE}" -o "${BIN_DIR}/${APP_NAME}" || { echo "Download failed"; exit 1; }
+if ! file "${BIN_DIR}/${APP_NAME}" | grep -q "ELF"; then
+    echo "ERROR: Downloaded file is not a valid ELF binary!"
+    exit 1
+fi
+echo "Installed binary to ${BIN_DIR}/${APP_NAME} and made it executable"
 chmod +x "${BIN_DIR}/${APP_NAME}"
 echo "Installed binary to ${BIN_DIR}/${APP_NAME}"
 
@@ -87,16 +87,6 @@ systemctl enable filebrowser.service
 # 4) Start service
 # -----------------------------
 systemctl start filebrowser.service
-
-chmod +x "${BIN_DIR}/${APP_NAME}"
-
-if ! file "${BIN_DIR}/${APP_NAME}" | grep -q "ELF"; then
-    echo "ERROR: Downloaded file is not a valid ELF binary!"
-    exit 1
-fi
-
-echo "Installed binary to ${BIN_DIR}/${APP_NAME} and made it executable"
-echo
 
 echo "==============================="
 echo "FileBrowser installed & started"
