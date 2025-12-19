@@ -10,25 +10,6 @@ SERVICE_FILE="/etc/systemd/system/filebrowser.service"
 RELEASE_BASE="https://github.com/gtsteffaniak/filebrowser/releases/latest/download"
 STORAGE_NAME="/filebrowser_quantum_storage"
 
-echo "请选择默认语言 / Please select default language:"
-echo "1) 中文 (简体)"
-echo "2) English"
-
-read -p "输入数字选择 / Enter number: " lang_choice
-
-case "$lang_choice" in
-  1)
-    LOCALE="zh"
-    ;;
-  2)
-    LOCALE="en"
-    ;;
-  *)
-    echo "无效选择，默认使用英文 / Invalid choice, defaulting to English."
-    LOCALE="en"
-    ;;
-esac
-
 PORT=$1
 USERNAME=$2
 
@@ -92,8 +73,6 @@ auth:
     password:
       enabled: true
       minLength: 10
-userDefaults:
-  locale: "${LOCALE}"
 EOF
 
 if [[ ! -d "${STORAGE_NAME}" ]]; then
