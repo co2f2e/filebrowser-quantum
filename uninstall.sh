@@ -34,7 +34,7 @@ if [ -d "${CONFIG_DIR}" ]; then
 fi
 
 if [ -d "${STORAGE_NAME}" ]; then
-    read -p "Directory ${STORAGE_NAME} already exists. Do you want to keep existing files? [y/N]: " keep
+    read -p "Do you want to keep existing files? [y/N]: " keep
     case "$keep" in
         [yY]|[yY][eE][sS])
             echo "Keeping existing files."
