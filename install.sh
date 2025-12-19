@@ -8,6 +8,7 @@ CONFIG_DIR="/etc/filebrowser"
 CONFIG_FILE="${CONFIG_DIR}/config.yaml"
 SERVICE_FILE="/etc/systemd/system/filebrowser.service"
 RELEASE_BASE="https://github.com/gtsteffaniak/filebrowser/releases/latest/download"
+STORAGE_NAME="/filebrowser_quantum_storage"
 
 PORT=$1
 USERNAME=$2
@@ -61,7 +62,7 @@ server:
   baseURL: "/"                
   database: "/etc/filebrowser/database.db"
   sources:
-    - path: "/filebrowser_quantum"
+    - path: "${STORAGE_NAME}"
       config:
         defaultEnabled: true
 
@@ -74,8 +75,11 @@ auth:
       minLength: 10
 EOF
 
-sudo mkdir -p /filebrowser_quantum
-sudo chown -R root:root /filebrowser_quantum
+if [[ ! -d "${STORAGE_NAME}" ]]; then
+    sudo mkdir -p "${STORAGE_NAME}"
+    sudo chown -R root:root "${STORAGE_NAME}"
+    sudo chmod 700 "${STORAGE_NAME}"  
+fi
 
 echo "Default config written to ${CONFIG_FILE}"
 
