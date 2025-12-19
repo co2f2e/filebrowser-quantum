@@ -18,14 +18,15 @@ RELEASE_BASE="https://github.com/gtsteffaniak/filebrowser/releases/latest/downlo
 echo "Downloading FileBrowser..."
 ARCH=$(uname -m)
 if [[ "$ARCH" == "x86_64" ]]; then
-  FILE="${APP_NAME}_linux_amd64"
+  FILE="linux-amd64-filebrowser"
 elif [[ "$ARCH" == "aarch64" ]]; then
-  FILE="${APP_NAME}_linux_arm64"
+  FILE="linux-arm64-filebrowser"
 else
   echo "Unsupported architecture: $ARCH"
   exit 1
 fi
 
+echo "Downloading ${FILE}..."
 curl -L "${RELEASE_BASE}/${FILE}" -o "${BIN_DIR}/${APP_NAME}"
 chmod +x "${BIN_DIR}/${APP_NAME}"
 echo "Installed binary to ${BIN_DIR}/${APP_NAME}"
