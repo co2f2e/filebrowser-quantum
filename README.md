@@ -1,4 +1,4 @@
-# filebrowser
+# filebrowser-quantum
 
 <hr>
 
