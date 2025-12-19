@@ -59,7 +59,7 @@ echo "Installed binary to ${BIN_DIR}/${APP_NAME} and made it executable"
 # Basic config.yaml
 cat > "${CONFIG_FILE}" <<EOF
 server:
-  bind: ":${PORT}"
+  address: ":${PORT}"
   baseURL: "/"
 auth:
   adminUsername: "admin"
