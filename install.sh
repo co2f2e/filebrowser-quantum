@@ -9,7 +9,7 @@ BIN_DIR="/usr/local/bin"
 CONFIG_DIR="/etc/filebrowser"
 CONFIG_FILE="${CONFIG_DIR}/config.yaml"
 SERVICE_FILE="/etc/systemd/system/filebrowser.service"
-PORT=8080
+PORT=$1
 RELEASE_BASE="https://github.com/gtsteffaniak/filebrowser/releases/latest/download"
 
 # -----------------------------
