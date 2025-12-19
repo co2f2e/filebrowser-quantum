@@ -54,6 +54,8 @@ echo "Installed binary to ${BIN_DIR}/${APP_NAME} and made it executable"
 cat > "${CONFIG_FILE}" <<EOF
 server:
   port: ${PORT}
+  baseURL: "/"                
+  database: "/etc/filebrowser/database.db"
   sources:
     - path: "/filebrowser_quantum"
       config:
