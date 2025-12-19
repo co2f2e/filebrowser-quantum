@@ -14,6 +14,13 @@ PORT=$1
 RELEASE_BASE="https://github.com/gtsteffaniak/filebrowser/releases/latest/download"
 
 # -----------------------------
+# 0) Ensure working directory exists and writable
+# -----------------------------
+sudo mkdir -p /etc/filebrowser
+sudo chown -R root:root /etc/filebrowser
+sudo chmod -R 700 /etc/filebrowser
+
+# -----------------------------
 # 1) Download binary
 # -----------------------------
 echo "Downloading FileBrowser..."
