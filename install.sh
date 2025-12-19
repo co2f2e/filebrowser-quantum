@@ -12,10 +12,12 @@ SERVICE_FILE="/etc/systemd/system/filebrowser.service"
 PORT=$1
 RELEASE_BASE="https://github.com/gtsteffaniak/filebrowser/releases/latest/download"
 
+# -----------------------------
+# 0) Ensure working directory exists and writable
+# -----------------------------
 sudo mkdir -p /etc/filebrowser
-sudo touch /etc/filebrowser/database.db
-sudo chown root:root /etc/filebrowser/database.db
-sudo chmod 600 /etc/filebrowser/database.db
+sudo chown root:root /etc/filebrowser
+sudo chmod 700 /etc/filebrowser
 
 # -----------------------------
 # 1) Download binary
@@ -37,9 +39,8 @@ if ! file "${BIN_DIR}/${APP_NAME}" | grep -q "ELF"; then
     echo "ERROR: Downloaded file is not a valid ELF binary!"
     exit 1
 fi
-echo "Installed binary to ${BIN_DIR}/${APP_NAME} and made it executable"
 chmod +x "${BIN_DIR}/${APP_NAME}"
-echo "Installed binary to ${BIN_DIR}/${APP_NAME}"
+echo "Installed binary to ${BIN_DIR}/${APP_NAME} and made it executable"
 
 # -----------------------------
 # 2) Create config directory
@@ -51,6 +52,7 @@ if [[ -z "$PORT" ]]; then
     echo "ERROR: Port not specified!"
     exit 1
 fi
+
 # Basic config.yaml
 cat > "${CONFIG_FILE}" <<EOF
 server:
