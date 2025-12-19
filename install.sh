@@ -61,6 +61,7 @@ server:
 
 auth:
   adminUsername: "admin"
+  adminPassword: "admin"
   methods:
     password:
       enabled: true
