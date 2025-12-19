@@ -13,16 +13,10 @@ SERVICE_FILE="/etc/systemd/system/filebrowser.service"
 PORT=$1
 RELEASE_BASE="https://github.com/gtsteffaniak/filebrowser/releases/latest/download"
 
-# -----------------------------
-# 0) Ensure working directory exists and writable
-# -----------------------------
 sudo mkdir -p /etc/filebrowser
 sudo chown -R root:root /etc/filebrowser
 sudo chmod -R 700 /etc/filebrowser
 
-# -----------------------------
-# 1) Download binary
-# -----------------------------
 echo "Downloading FileBrowser..."
 ARCH=$(uname -m)
 if [[ "$ARCH" == "x86_64" ]]; then
@@ -57,7 +51,6 @@ fi
 sudo chmod +x "${BIN_DIR}/${APP_NAME}"
 echo "Installed binary to ${BIN_DIR}/${APP_NAME} and made it executable"
 
-# Basic config.yaml
 cat > "${CONFIG_FILE}" <<EOF
 server:
   port: ${PORT}
@@ -79,9 +72,6 @@ sudo chown -R root:root /filebrowser_quantum
 
 echo "Default config written to ${CONFIG_FILE}"
 
-# -----------------------------
-# 3) systemd service file
-# -----------------------------
 echo "Creating systemd service..."
 cat > "${SERVICE_FILE}" <<EOF
 [Unit]
@@ -102,10 +92,6 @@ EOF
 
 systemctl daemon-reload
 systemctl enable filebrowser.service
-
-# -----------------------------
-# 4) Start service
-# -----------------------------
 systemctl start filebrowser.service
 
 echo "==============================="
