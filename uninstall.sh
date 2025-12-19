@@ -2,38 +2,34 @@
 set -e
 
 APP_NAME="filebrowser"
-BIN_PATH="/usr/local/bin/filebrowser"
+BIN_PATH="/usr/local/bin/${APP_NAME}"
 CONFIG_DIR="/etc/filebrowser"
-SERVICE_FILE="/etc/systemd/system/filebrowser.service"
+SERVICE_FILE="/etc/systemd/system/${APP_NAME}.service"
 
-echo "Stopping filebrowser service (if running)..."
-if systemctl list-units --full -all | grep -q "${APP_NAME}.service"; then
-    systemctl stop ${APP_NAME}.service || true
-    systemctl disable ${APP_NAME}.service || true
+echo "Stopping FileBrowser service..."
+if systemctl is-active --quiet ${APP_NAME}; then
+    sudo systemctl stop ${APP_NAME}
+fi
+
+echo "Disabling FileBrowser service..."
+if systemctl is-enabled --quiet ${APP_NAME}; then
+    sudo systemctl disable ${APP_NAME}
 fi
 
 echo "Removing systemd service file..."
 if [ -f "${SERVICE_FILE}" ]; then
-    rm -f "${SERVICE_FILE}"
+    sudo rm -f "${SERVICE_FILE}"
+    sudo systemctl daemon-reload
 fi
-
-echo "Reloading systemd daemon..."
-systemctl daemon-reload
-systemctl reset-failed || true
 
 echo "Removing binary..."
 if [ -f "${BIN_PATH}" ]; then
-    rm -f "${BIN_PATH}"
+    sudo rm -f "${BIN_PATH}"
 fi
 
-echo "Removing config directory..."
+echo "Removing configuration directory..."
 if [ -d "${CONFIG_DIR}" ]; then
-    rm -rf "${CONFIG_DIR}"
+    sudo rm -rf "${CONFIG_DIR}"
 fi
 
-echo "==============================="
-echo "FileBrowser has been completely removed."
-echo "Binary: ${BIN_PATH}"
-echo "Config: ${CONFIG_DIR}"
-echo "Service: ${SERVICE_FILE}"
-echo "==============================="
+echo "FileBrowser has been completely uninstalled."
