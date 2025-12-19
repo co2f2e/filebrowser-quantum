@@ -82,6 +82,16 @@ systemctl enable filebrowser.service
 # -----------------------------
 systemctl start filebrowser.service
 
+chmod +x "${BIN_DIR}/${APP_NAME}"
+
+if ! file "${BIN_DIR}/${APP_NAME}" | grep -q "ELF"; then
+    echo "ERROR: Downloaded file is not a valid ELF binary!"
+    exit 1
+fi
+
+echo "Installed binary to ${BIN_DIR}/${APP_NAME} and made it executable"
+echo
+
 echo "==============================="
 echo "FileBrowser installed & started"
 echo "Access: http://$(hostname -I | awk '{print $1}'):${PORT}"
