@@ -33,25 +33,28 @@ else
   exit 1
 fi
 
+if systemctl list-units --all | grep -q filebrowser.service; then
+    sudo systemctl stop filebrowser
+fi
+
+if [ -f "${BIN_DIR}/${APP_NAME}" ]; then
+    sudo rm -f "${BIN_DIR}/${APP_NAME}"
+fi
+
 echo "Downloading ${FILE}..."
-curl -L -f "${RELEASE_BASE}/${FILE}" -o "${BIN_DIR}/${APP_NAME}" || { echo "Download failed"; exit 1; }
+curl -L -f "${RELEASE_BASE}/${FILE}" -o "${BIN_DIR}/${APP_NAME}" || { 
+    echo "Download failed"; 
+    [ -f "${BIN_DIR}/${APP_NAME}" ] && sudo rm -f "${BIN_DIR}/${APP_NAME}" 
+    exit 1
+}
+
 if ! file "${BIN_DIR}/${APP_NAME}" | grep -q "ELF"; then
     echo "ERROR: Downloaded file is not a valid ELF binary!"
     exit 1
 fi
-chmod +x "${BIN_DIR}/${APP_NAME}"
+
+sudo chmod +x "${BIN_DIR}/${APP_NAME}"
 echo "Installed binary to ${BIN_DIR}/${APP_NAME} and made it executable"
-
-# -----------------------------
-# 2) Create config directory
-# -----------------------------
-echo "Creating config directory at ${CONFIG_DIR}..."
-mkdir -p "${CONFIG_DIR}"
-
-if [[ -z "$PORT" ]]; then
-    echo "ERROR: Port not specified!"
-    exit 1
-fi
 
 # Basic config.yaml
 cat > "${CONFIG_FILE}" <<EOF
