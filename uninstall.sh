@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 set -e
-
+cd /root || exit 1
 APP_NAME="filebrowser"
 BIN_PATH="/usr/local/bin/${APP_NAME}"
 CONFIG_DIR="/etc/filebrowser"
