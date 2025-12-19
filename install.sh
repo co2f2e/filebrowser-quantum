@@ -14,16 +14,6 @@ PORT=$1
 RELEASE_BASE="https://github.com/gtsteffaniak/filebrowser/releases/latest/download"
 
 # -----------------------------
-# 0) Ensure working directory exists and writable
-# -----------------------------
-sudo mkdir -p /etc/filebrowser
-sudo chown -R root:root /etc/filebrowser
-sudo chmod -R 700 /etc/filebrowser
-
-sudo touch /etc/filebrowser/database.db
-sudo chown root:root /etc/filebrowser/database.db
-
-# -----------------------------
 # 1) Download binary
 # -----------------------------
 echo "Downloading FileBrowser..."
@@ -64,9 +54,6 @@ echo "Installed binary to ${BIN_DIR}/${APP_NAME} and made it executable"
 cat > "${CONFIG_FILE}" <<EOF
 server:
   port: ${PORT}
-  baseURL: "/"
-  database: "/etc/filebrowser/database.db"
-
   sources:
     - path: "/filebrowser_quantum"
       config:
@@ -77,7 +64,7 @@ auth:
   methods:
     password:
       enabled: true
-      minLength: 1
+      minLength: 10
 EOF
 
 sudo mkdir -p /filebrowser_quantum
