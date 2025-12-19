@@ -4,7 +4,7 @@
 
 * 安装
 ```shell
-bash <(curl -Ls https://raw.githubusercontent.com/co2f2e/filebrowser-quantum/main/install.sh) 8088
+bash <(curl -Ls https://raw.githubusercontent.com/co2f2e/filebrowser-quantum/main/install.sh) 8088 admin
 ```
 * 卸载
 ```shell
