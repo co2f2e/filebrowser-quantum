@@ -63,8 +63,9 @@ server:
   database: "/etc/filebrowser/database.db"
   sources:
     - path: "${STORAGE_NAME}"
+    - name: "My Files"
       config:
-        defaultEnabled: true
+        private: true
 
 auth:
   adminUsername: "${USERNAME}"
