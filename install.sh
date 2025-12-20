@@ -63,7 +63,7 @@ server:
   database: "/etc/filebrowser/database.db"
   sources:
     - path: "${STORAGE_NAME}"
-    - name: "My Files"
+      name: "My Files"
       config:
         private: true
 
