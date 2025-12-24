@@ -10,6 +10,7 @@ SERVICE_FILE="/etc/systemd/system/filebrowser.service"
 RELEASE_BASE="https://github.com/gtsteffaniak/filebrowser/releases/latest/download"
 PRIVATE_STORAGE="/filebrowser_quantum_storage/private"
 PUBLIC_STORAGE="/filebrowser_quantum_storage/public"
+USERS_STORAGE="/filebrowser_quantum_storage/users"
 
 PORT=$1
 USERNAME=$2
@@ -67,6 +68,10 @@ server:
       name: "Private Files"
       config:
         private: true
+    - path: "${USERS_STORAGE}"
+      name: "Users Files"
+      config:
+        private: true
     - path: "${PUBLIC_STORAGE}"
       name: "Public Files"
       config:
@@ -86,6 +91,11 @@ if [[ ! -d "${PRIVATE_STORAGE}" ]]; then
     sudo mkdir -p "${PRIVATE_STORAGE}"
     sudo chown -R root:root "${PRIVATE_STORAGE}"
     sudo chmod 700 "${PRIVATE_STORAGE}"  
+fi
+if [[ ! -d "${USERS_STORAGE}" ]]; then
+    sudo mkdir -p "${USERS_STORAGE}"
+    sudo chown -R root:root "${USERS_STORAGE}"
+    sudo chmod 700 "${USERS_STORAGE}"  
 fi
 if [[ ! -d "${PUBLIC_STORAGE}" ]]; then
     sudo mkdir -p "${PUBLIC_STORAGE}"
