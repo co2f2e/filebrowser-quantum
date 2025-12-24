@@ -9,7 +9,7 @@ CONFIG_FILE="${CONFIG_DIR}/config.yaml"
 SERVICE_FILE="/etc/systemd/system/filebrowser.service"
 RELEASE_BASE="https://github.com/gtsteffaniak/filebrowser/releases/latest/download"
 PRIVATE_STORAGE="/filebrowser_quantum_storage/private"
-PUBLIC_STORAGE="/etc/filebrowser_quantum_storage/public"
+PUBLIC_STORAGE="/filebrowser_quantum_storage/public"
 
 PORT=$1
 USERNAME=$2
