@@ -89,8 +89,8 @@ if [[ ! -d "${PRIVATE_STORAGE}" ]]; then
 fi
 if [[ ! -d "${PUBLIC_STORAGE}" ]]; then
     sudo mkdir -p "${PUBLIC_STORAGE}"
-    sudo chown -R root:root "${PUBLIC_STORAGE}"
-    sudo chmod 700 "${PUBLIC_STORAGE}"  
+    sudo chown -R root:www-data "${PUBLIC_STORAGE}"
+    sudo chmod -R 755 "${PUBLIC_STORAGE}"
 fi
 
 echo "Default config written to ${CONFIG_FILE}"
