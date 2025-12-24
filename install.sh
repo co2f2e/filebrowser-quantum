@@ -8,7 +8,7 @@ CONFIG_DIR="/etc/filebrowser"
 CONFIG_FILE="${CONFIG_DIR}/config.yaml"
 SERVICE_FILE="/etc/systemd/system/filebrowser.service"
 RELEASE_BASE="https://github.com/gtsteffaniak/filebrowser/releases/latest/download"
-STORAGE_NAME="/filebrowser_quantum_storage"
+PRIVATE_STORAGE="/filebrowser_quantum_storage"
 
 PORT=$1
 USERNAME=$2
@@ -62,10 +62,15 @@ server:
   baseURL: "/"                
   database: "/etc/filebrowser/database.db"
   sources:
-    - path: "${STORAGE_NAME}"
-      name: "My Files"
+    - path: "${PRIVATE_STORAGE}"
+      name: "Private Files"
       config:
         private: true
+    - path: "${PUBLIC_STORAGE}"
+      name: "Public Files"
+      config:
+        defaultEnabled: true
+        private: false
 
 auth:
   adminUsername: "${USERNAME}"
@@ -76,10 +81,15 @@ auth:
       minLength: 10
 EOF
 
-if [[ ! -d "${STORAGE_NAME}" ]]; then
-    sudo mkdir -p "${STORAGE_NAME}"
-    sudo chown -R root:root "${STORAGE_NAME}"
-    sudo chmod 700 "${STORAGE_NAME}"  
+if [[ ! -d "${PRIVATE_STORAGE}" ]]; then
+    sudo mkdir -p "${PRIVATE_STORAGE}"
+    sudo chown -R root:root "${PRIVATE_STORAGE}"
+    sudo chmod 700 "${PRIVATE_STORAGE}"  
+fi
+if [[ ! -d "${PUBLIC_STORAGE}" ]]; then
+    sudo mkdir -p "${PUBLIC_STORAGE}"
+    sudo chown -R root:root "${PUBLIC_STORAGE}"
+    sudo chmod 700 "${PUBLIC_STORAGE}"  
 fi
 
 echo "Default config written to ${CONFIG_FILE}"
