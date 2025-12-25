@@ -72,7 +72,7 @@ server:
     - path: "${USERS_STORAGE}"
       name: "Users Files"
       config:
-         defaultUserScope: "/subfolder"
+         defaultUserScope: "${{USERS_STORAGE}}"
          defaultEnabled: true
          createUserDir: true
     - path: "${PUBLIC_STORAGE}"
