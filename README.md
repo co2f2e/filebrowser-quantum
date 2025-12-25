@@ -31,6 +31,7 @@ location ^~ / {
 
     client_max_body_size 2G;
     proxy_buffering off;
+    proxy_request_buffering off;
 
     proxy_connect_timeout 600s;
     proxy_send_timeout 600s;
