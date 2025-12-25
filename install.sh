@@ -79,7 +79,6 @@ server:
       name: "Public Files"
       config:
         defaultEnabled: true
-        private: false
 auth:
   adminUsername: "${USERNAME}"
   adminPassword: "admin123456"
