@@ -4,9 +4,9 @@ set -e
 cd /root || exit 1
 APP_NAME="filebrowser"
 BIN_DIR="/usr/local/bin"
-CONFIG_DIR="/etc/filebrowser"
+CONFIG_DIR="/etc/filebrowser_quantum"
 CONFIG_FILE="${CONFIG_DIR}/config.yaml"
-SERVICE_FILE="/etc/systemd/system/filebrowser.service"
+SERVICE_FILE="/etc/systemd/system/filebrowser_quantum.service"
 RELEASE_BASE="https://github.com/gtsteffaniak/filebrowser/releases/latest/download"
 ADMIN_STORAGE="/filebrowser_quantum_storage/admin"
 SHARED_STORAGE="/filebrowser_quantum_storage/share"
@@ -20,11 +20,11 @@ if [[ -z "$PORT" || -z "$USERNAME" ]]; then
     exit 1
 fi
 
-sudo mkdir -p /etc/filebrowser
-sudo chown -R root:root /etc/filebrowser
-sudo chmod -R 700 /etc/filebrowser
+sudo mkdir -p "${CONFIG_DIR}"
+sudo chown -R root:root "${CONFIG_DIR}"
+sudo chmod -R 700 "${CONFIG_DIR}"
 
-echo "Downloading FileBrowser..."
+echo "Downloading FileBrowser Quantum..."
 ARCH=$(uname -m)
 if [[ "$ARCH" == "x86_64" ]]; then
   FILE="linux-amd64-filebrowser"
@@ -35,8 +35,8 @@ else
   exit 1
 fi
 
-if systemctl list-units --all | grep -q filebrowser.service; then
-    sudo systemctl stop filebrowser
+if systemctl list-units --all | grep -q filebrowserquantum.service; then
+    sudo systemctl stop filebrowserquantum
 fi
 
 if [ -f "${BIN_DIR}/${APP_NAME}" ]; then
@@ -62,7 +62,7 @@ cat > "${CONFIG_FILE}" <<EOF
 server:
   port: ${PORT}
   baseURL: "/"                
-  database: "/etc/filebrowser/database.db"
+  database: "/etc/filebrowser_quantum/database.db"
   sources:
     - path: "${ADMIN_STORAGE}"
       name: "Admin Files"
@@ -111,7 +111,7 @@ echo "Default config written to ${CONFIG_FILE}"
 echo "Creating systemd service..."
 cat > "${SERVICE_FILE}" <<EOF
 [Unit]
-Description=FileBrowser (gtsteffaniak/filebrowser)
+Description=FileBrowserQuantum
 After=network.target
 
 [Service]
@@ -120,7 +120,7 @@ ExecStart=${BIN_DIR}/${APP_NAME} -c ${CONFIG_FILE}
 Restart=on-failure
 User=root
 Group=root
-WorkingDirectory=/etc/filebrowser
+WorkingDirectory=${CONFIG_DIR}
 
 StandardOutput=journal
 StandardError=journal
@@ -132,15 +132,15 @@ WantedBy=multi-user.target
 EOF
 
 systemctl daemon-reload
-systemctl enable filebrowser.service
-systemctl start filebrowser.service
+systemctl enable filebrowserquantum.service
+systemctl start filebrowserquantum.service
 
 echo "==============================="
-echo "FileBrowser installed & started"
+echo "FileBrowserQuantum installed & started"
 echo "Access: http://$(hostname -I | awk '{print $1}'):${PORT}"
 echo "Username: ${USERNAME}"
 echo "Password: admin123456"
 echo "Config at: ${CONFIG_FILE}"
 echo "You can modify config and restart service via:"
-echo "  systemctl restart filebrowser"
+echo "  systemctl restart filebrowserquantum"
 echo "==============================="
