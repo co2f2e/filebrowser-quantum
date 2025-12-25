@@ -132,8 +132,8 @@ WantedBy=multi-user.target
 EOF
 
 systemctl daemon-reload
-systemctl enable filebrowserquantum.service
-systemctl start filebrowserquantum.service
+systemctl enable filebrowser_quantum.service
+systemctl start filebrowser_quantum.service
 
 echo "==============================="
 echo "FileBrowserQuantum installed & started"
@@ -142,5 +142,5 @@ echo "Username: ${USERNAME}"
 echo "Password: admin123456"
 echo "Config at: ${CONFIG_FILE}"
 echo "You can modify config and restart service via:"
-echo "  systemctl restart filebrowserquantum"
+echo "  systemctl restart filebrowser_quantum"
 echo "==============================="
