@@ -68,7 +68,6 @@ server:
       name: "Admin Files"
       config:
         private: true
-        denyByDefault: true
     - path: "${USER_STORAGE}"
       name: "User Files"
       config:
