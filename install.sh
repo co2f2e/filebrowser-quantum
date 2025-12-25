@@ -68,16 +68,18 @@ server:
       name: "Private Files"
       config:
         private: true
+        denyByDefault: true
     - path: "${USERS_STORAGE}"
       name: "Users Files"
       config:
-        private: true
+         defaultUserScope: "/subfolder"
+         defaultEnabled: true
+         createUserDir: true
     - path: "${PUBLIC_STORAGE}"
       name: "Public Files"
       config:
         defaultEnabled: true
         private: false
-
 auth:
   adminUsername: "${USERNAME}"
   adminPassword: "admin123456"
