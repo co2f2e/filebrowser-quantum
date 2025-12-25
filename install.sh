@@ -84,6 +84,10 @@ auth:
     password:
       enabled: true
       minLength: 10
+logging:
+  - output: "/var/log/filebrowser_quantum.log"
+    levels: "error"
+    noColors: false
 EOF
 
 if [[ ! -d "${ADMIN_STORAGE}" ]]; then
