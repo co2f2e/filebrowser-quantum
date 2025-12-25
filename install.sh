@@ -8,9 +8,9 @@ CONFIG_DIR="/etc/filebrowser"
 CONFIG_FILE="${CONFIG_DIR}/config.yaml"
 SERVICE_FILE="/etc/systemd/system/filebrowser.service"
 RELEASE_BASE="https://github.com/gtsteffaniak/filebrowser/releases/latest/download"
-PRIVATE_STORAGE="/filebrowser_quantum_storage/private"
-PUBLIC_STORAGE="/filebrowser_quantum_storage/public"
-USERS_STORAGE="/filebrowser_quantum_storage/users"
+ADMIN_STORAGE="/filebrowser_quantum_storage/admin"
+SHARED_STORAGE="/filebrowser_quantum_storage/share"
+USER_STORAGE="/filebrowser_quantum_storage/users"
 
 PORT=$1
 USERNAME=$2
@@ -64,18 +64,18 @@ server:
   baseURL: "/"                
   database: "/etc/filebrowser/database.db"
   sources:
-    - path: "${PRIVATE_STORAGE}"
-      name: "Private Files"
+    - path: "${ADMIN_STORAGE}"
+      name: "Admin Files"
       config:
         private: true
         denyByDefault: true
-    - path: "${USERS_STORAGE}"
-      name: "Users Files"
+    - path: "${USER_STORAGE}"
+      name: "User Files"
       config:
          defaultEnabled: true
          createUserDir: true
-    - path: "${PUBLIC_STORAGE}"
-      name: "Public Files"
+    - path: "${SHARED_STORAGE}"
+      name: "Shared Files"
       config:
         defaultEnabled: true
 auth:
@@ -87,20 +87,20 @@ auth:
       minLength: 10
 EOF
 
-if [[ ! -d "${PRIVATE_STORAGE}" ]]; then
-    sudo mkdir -p "${PRIVATE_STORAGE}"
-    sudo chown -R root:root "${PRIVATE_STORAGE}"
-    sudo chmod 700 "${PRIVATE_STORAGE}"  
+if [[ ! -d "${ADMIN_STORAGE}" ]]; then
+    sudo mkdir -p "${ADMIN_STORAGE}"
+    sudo chown -R root:root "${ADMIN_STORAGE}"
+    sudo chmod 700 "${ADMIN_STORAGE}"  
 fi
-if [[ ! -d "${USERS_STORAGE}" ]]; then
-    sudo mkdir -p "${USERS_STORAGE}"
-    sudo chown -R root:root "${USERS_STORAGE}"
-    sudo chmod 700 "${USERS_STORAGE}"  
+if [[ ! -d "${USER_STORAGE}" ]]; then
+    sudo mkdir -p "${USER_STORAGE}"
+    sudo chown -R root:root "${USER_STORAGE}"
+    sudo chmod 700 "${USER_STORAGE}"  
 fi
-if [[ ! -d "${PUBLIC_STORAGE}" ]]; then
-    sudo mkdir -p "${PUBLIC_STORAGE}"
-    sudo chown -R root:www-data "${PUBLIC_STORAGE}"
-    sudo chmod -R 755 "${PUBLIC_STORAGE}"
+if [[ ! -d "${SHARED_STORAGE}" ]]; then
+    sudo mkdir -p "${SHARED_STORAGE}"
+    sudo chown -R root:www-data "${SHARED_STORAGE}"
+    sudo chmod -R 755 "${SHARED_STORAGE}"
 fi
 
 echo "Default config written to ${CONFIG_FILE}"
