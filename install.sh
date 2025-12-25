@@ -118,6 +118,11 @@ User=root
 Group=root
 WorkingDirectory=/etc/filebrowser
 
+StandardOutput=journal
+StandardError=journal
+
+LogLevelMax=err
+
 [Install]
 WantedBy=multi-user.target
 EOF
