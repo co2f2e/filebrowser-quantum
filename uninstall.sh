@@ -3,16 +3,16 @@ set -e
 cd /root || exit 1
 APP_NAME="filebrowser"
 BIN_PATH="/usr/local/bin/${APP_NAME}"
-CONFIG_DIR="/etc/filebrowser"
-SERVICE_FILE="/etc/systemd/system/${APP_NAME}.service"
+CONFIG_DIR="/etc/filebrowser_quantum"
+SERVICE_FILE="/etc/systemd/system/filebrowser_quantum.service"
 STORAGE_NAME="/filebrowser_quantum_storage"
 
-echo "Stopping FileBrowser service..."
+echo "Stopping FileBrowserQuantum service..."
 if systemctl is-active --quiet ${APP_NAME}; then
     systemctl stop ${APP_NAME}
 fi
 
-echo "Disabling FileBrowser service..."
+echo "Disabling FileBrowserQuantum service..."
 if systemctl is-enabled --quiet ${APP_NAME}; then
     systemctl disable ${APP_NAME}
 fi
@@ -46,4 +46,4 @@ if [ -d "${STORAGE_NAME}" ]; then
     esac
 fi
 
-echo "FileBrowser has been completely uninstalled."
+echo "FileBrowserQuantum has been completely uninstalled."
